@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		27EA51F430333F7D0036FA2A /* AppsFlyerLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF2A90F30330F7C00A738E7 /* AppsFlyerLib.framework */; };
+		27EA51F930333FE10036FA2A /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 27EA51F830333FE10036FA2A /* AppsFlyerLib */; };
+		FB1111111111111111111101 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = FB1111111111111111111102 /* FirebaseRemoteConfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		27AD30C930064376007A63B0 /* DigitalTimeCapsule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitalTimeCapsule.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF2A90F30330F7C00A738E7 /* AppsFlyerLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppsFlyerLib.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +30,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1111111111111111111101 /* FirebaseRemoteConfig in Frameworks */,
+				27EA51F430333F7D0036FA2A /* AppsFlyerLib.framework in Frameworks */,
+				27EA51F930333FE10036FA2A /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +44,7 @@
 			children = (
 				27AD30CB30064376007A63B0 /* DigitalTimeCapsule */,
 				27AD30CA30064376007A63B0 /* Products */,
+				FAF2A90F30330F7C00A738E7 /* AppsFlyerLib.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +76,8 @@
 			);
 			name = DigitalTimeCapsule;
 			packageProductDependencies = (
+				FB1111111111111111111102 /* FirebaseRemoteConfig */,
+				27EA51F830333FE10036FA2A /* AppsFlyerLib */,
 			);
 			productName = DigitalTimeCapsule;
 			productReference = 27AD30C930064376007A63B0 /* DigitalTimeCapsule.app */;
@@ -94,6 +107,10 @@
 			);
 			mainGroup = 27AD30C030064376007A63B0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FB1111111111111111111103 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				27EA51F730333FE10036FA2A /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 27AD30CA30064376007A63B0 /* Products */;
 			projectDirPath = "";
@@ -249,10 +266,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Novaline Core";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Attach a photo to your letter using the camera.";
@@ -267,7 +289,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novalinecoreapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -290,10 +312,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Novaline Core";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Attach a photo to your letter using the camera.";
@@ -308,7 +335,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novalinecoreapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -348,6 +375,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27EA51F730333FE10036FA2A /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.1;
+			};
+		};
+		FB1111111111111111111103 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27EA51F830333FE10036FA2A /* AppsFlyerLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27EA51F730333FE10036FA2A /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			productName = AppsFlyerLib;
+		};
+		FB1111111111111111111102 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB1111111111111111111103 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 27AD30C130064376007A63B0 /* Project object */;
 }

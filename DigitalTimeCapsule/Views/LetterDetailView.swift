@@ -79,6 +79,22 @@ struct LetterDetailView: View {
                                       enabled: !letter.isSealed) {
                             openLetter(letter)
                         }
+                        if letter.isOpened {
+                            ShareLink(item: shareText(for: letter)) {
+                                Text("Share Letter")
+                                    .font(.rounded(16, .semibold))
+                                    .foregroundColor(AppTheme.accent)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 15)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: AppTheme.cornerMedium, style: .continuous)
+                                            .stroke(AppTheme.accent, lineWidth: 1.5)
+                                    )
+                            }
+                            .simultaneousGesture(TapGesture().onEnded {
+                                Haptics.impact(.light)
+                            })
+                        }
                         if letter.isSealed {
                             OutlineButton(title: "Edit Letter") {
                                 showingEdit = true
@@ -179,6 +195,17 @@ struct LetterDetailView: View {
             try? await Task.sleep(nanoseconds: 2_600_000_000)
             withAnimation { showConfetti = false }
         }
+    }
+
+    private func shareText(for letter: Letter) -> String {
+        """
+        \(letter.title)
+
+        To \(letter.recipient):
+        \(letter.message)
+
+        — Sealed \(letter.createdAt.formatted(date: .abbreviated, time: .omitted)), opened \(letter.unlockDateText)
+        """
     }
 
     private func revealText(for letter: Letter) -> String {

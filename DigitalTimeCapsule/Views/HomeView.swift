@@ -6,18 +6,22 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 24) {
-                    heroCarousel
+            if viewModel.letters.isEmpty {
+                emptyState
+            } else {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 24) {
+                        heroCarousel
 
-                    VStack(spacing: 14) {
-                        SectionHeader(title: "Ready to Open")
-                        horizontalRow
+                        VStack(spacing: 14) {
+                            SectionHeader(title: "Ready to Open")
+                            horizontalRow
+                        }
+                        .padding(.horizontal, 20)
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.top, 16)
+                    .padding(.bottom, 16)
                 }
-                .padding(.top, 16)
-                .padding(.bottom, 16)
             }
 
             nextCapsuleCard
@@ -33,6 +37,26 @@ struct HomeView: View {
                     .foregroundColor(AppTheme.textPrimary)
             }
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: 16) {
+            Spacer()
+            Image(systemName: "envelope.open")
+                .font(.system(size: 52, weight: .light))
+                .foregroundColor(AppTheme.accent)
+            Text("No capsules yet")
+                .font(.rounded(20, .bold))
+                .foregroundColor(AppTheme.textPrimary)
+            Text("Write your first letter to the future and seal it until a date you choose.")
+                .font(.rounded(15, .regular))
+                .foregroundColor(AppTheme.textSecondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 40)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var heroCarousel: some View {
