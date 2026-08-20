@@ -9,12 +9,44 @@ enum LetterFilter: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+enum LetterSort: String, CaseIterable, Identifiable {
+    case unlockSoonest = "Unlock: Soonest"
+    case unlockLatest = "Unlock: Latest"
+    case recentlyCreated = "Recently Created"
+    case title = "Title A–Z"
+
+    var id: String { rawValue }
+
+    var icon: String {
+        switch self {
+        case .unlockSoonest: return "arrow.up"
+        case .unlockLatest: return "arrow.down"
+        case .recentlyCreated: return "clock"
+        case .title: return "textformat"
+        }
+    }
+
+    func sorted(_ letters: [Letter]) -> [Letter] {
+        switch self {
+        case .unlockSoonest:
+            return letters.sorted { $0.unlockAt < $1.unlockAt }
+        case .unlockLatest:
+            return letters.sorted { $0.unlockAt > $1.unlockAt }
+        case .recentlyCreated:
+            return letters.sorted { $0.createdAt > $1.createdAt }
+        case .title:
+            return letters.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+        }
+    }
+}
+
 struct LettersView: View {
     @ObservedObject var viewModel: LettersViewModel
 
     @State private var filter: LetterFilter = .all
     @State private var selectedCategory: LetterCategory?
     @State private var query = ""
+    @State private var sort: LetterSort = .unlockSoonest
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -24,9 +56,13 @@ struct LettersView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 16) {
-                Text("My Letters")
-                    .font(.rounded(26, .heavy))
-                    .foregroundColor(AppTheme.textPrimary)
+                HStack(alignment: .center) {
+                    Text("My Letters")
+                        .font(.rounded(26, .heavy))
+                        .foregroundColor(AppTheme.textPrimary)
+                    Spacer()
+                    sortMenu
+                }
 
                 searchField
 
@@ -54,6 +90,28 @@ struct LettersView: View {
         }
         .background(AppTheme.background.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var sortMenu: some View {
+        Menu {
+            Picker("Sort", selection: $sort) {
+                ForEach(LetterSort.allCases) { option in
+                    Label(option.rawValue, systemImage: option.icon).tag(option)
+                }
+            }
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "arrow.up.arrow.down")
+                    .font(.system(size: 13, weight: .semibold))
+                Text("Sort")
+                    .font(.rounded(14, .semibold))
+            }
+            .foregroundColor(AppTheme.accent)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(AppTheme.accent.opacity(0.15)))
+        }
+        .onChange(of: sort) { _ in Haptics.selection() }
     }
 
     private var searchField: some View {
@@ -170,12 +228,15 @@ struct LettersView: View {
         }
 
         let trimmed = query.trimmingCharacters(in: .whitespaces).lowercased()
-        guard !trimmed.isEmpty else { return base }
-        return base.filter {
-            $0.title.lowercased().contains(trimmed) ||
-            $0.recipient.lowercased().contains(trimmed) ||
-            $0.message.lowercased().contains(trimmed)
+        if !trimmed.isEmpty {
+            base = base.filter {
+                $0.title.lowercased().contains(trimmed) ||
+                $0.recipient.lowercased().contains(trimmed) ||
+                $0.message.lowercased().contains(trimmed)
+            }
         }
+
+        return sort.sorted(base)
     }
 
     private var gridItemWidth: CGFloat {
